@@ -3,6 +3,7 @@ package com.zdrojewska.anna.checking_sbox.reader;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,5 +42,30 @@ public class SBoxReader {
         }
 
         return convertedValuesFromFile;
+    }
+
+
+    //TO DO: REMOVE THIS CODE
+    public List<String> readFromFile()
+    {
+
+        File file = new File(filePath+fileName);
+        byte[] bytesFromFile = new byte[0];
+        try {
+            bytesFromFile = Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<String> readedFile = new ArrayList<>();
+
+        for(int i = 0;i<bytesFromFile.length;i++)
+        {
+            if(i % 2 == 0) // bytes to bits
+            {
+                readedFile.add(String.format("%8s",Integer.toBinaryString(bytesFromFile[i] & 0xFF )).replace(" ","0"));
+            }
+        }
+        System.out.println(readedFile);
+        return readedFile;
     }
 }
